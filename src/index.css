@@ -198,6 +198,11 @@
     animation: glow-pulse 2s ease-in-out infinite;
   }
 
+  /* Cursor styles for wand when enabled (optional alternate cursor look) */
+  .cursor-wand {
+    cursor: url('data:image/svg+xml;utf8,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%2224%22 height=%2224%22 viewBox=%220 0 24 24%22><path fill=%22%23d6c288%22 d=%22M2 21l1.5 1.5L19 7l-1.5-1.5z"/></svg>') 4 4, pointer;
+  }
+
   .delay-100 { animation-delay: 100ms; }
   .delay-200 { animation-delay: 200ms; }
   .delay-300 { animation-delay: 300ms; }

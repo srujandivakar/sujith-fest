@@ -7,6 +7,7 @@ import Index from "./pages/Index";
 import Events from "./pages/Events";
 import Register from "./pages/Register";
 import Navigator from "./pages/Navigator";
+import { WandCursor } from "@/components/WandCursor";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -14,6 +15,7 @@ const queryClient = new QueryClient();
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
+      <WandCursor />
       <Toaster />
       <Sonner 
         theme="dark"
