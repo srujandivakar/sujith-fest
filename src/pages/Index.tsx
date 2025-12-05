@@ -11,7 +11,7 @@ const Index = () => {
       <main className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 pt-16">
         <div className="text-center mb-12 animate-fade-in-up">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-gradient-gold mb-4 tracking-wider">
-            Arcanum Fest
+            Arcanum Fest 2024
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground font-body max-w-2xl mx-auto">
             Where magic meets academia. Enter the enchanted realm of collegiate celebration and wonder.
@@ -22,7 +22,7 @@ const Index = () => {
 
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
         <p className="text-muted-foreground text-sm font-display tracking-widest">
-          ✦ The Grand Magical College Festival 2024 ✦
+          ✦ The Grand Magical College Festival ✦
         </p>
         </div>
       </main>
