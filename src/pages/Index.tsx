@@ -11,7 +11,7 @@ const Index = () => {
       <main className="relative z-10 min-h-screen flex flex-col items-center justify-center px-4 pt-16">
         <div className="text-center mb-12 animate-fade-in-up">
           <h1 className="font-display text-4xl md:text-6xl lg:text-7xl text-gradient-gold mb-4 tracking-wider">
-            Arcanum Fest 2024
+            Arcanum Fest
           </h1>
           <p className="text-xl md:text-2xl text-muted-foreground font-body max-w-2xl mx-auto">
             Where magic meets academia. Enter the enchanted realm of collegiate celebration and wonder.
