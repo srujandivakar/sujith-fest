@@ -1,10 +1,11 @@
 import { Link, useLocation } from "react-router-dom";
-import { Sparkles, Calendar, Users, Home } from "lucide-react";
+import { Sparkles, Calendar, Users, Home, Compass } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const navItems = [
   { path: "/", label: "Portal", icon: Home },
   { path: "/events", label: "Events", icon: Calendar },
+  { path: "/navigate", label: "Navigator", icon: Compass },
   { path: "/register", label: "Register", icon: Users },
 ];
 

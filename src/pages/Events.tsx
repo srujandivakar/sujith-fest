@@ -1,10 +1,19 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { MagicalParticles } from "@/components/MagicalParticles";
 import { Navbar } from "@/components/Navbar";
 import { EventCard } from "@/components/EventCard";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { Sparkles, Filter } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import AdmitCard from "@/components/AdmitCard";
 
 const events = [
   {
@@ -79,6 +88,10 @@ const categories = ["All", "Cultural", "Technical", "Sports", "Literary"];
 
 const Events = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [registerOpen, setRegisterOpen] = useState(false);
+  const [ticketOpen, setTicketOpen] = useState(false);
+  const [pickedEventId, setPickedEventId] = useState<string | null>(null);
+  const [participant, setParticipant] = useState({ name: "", usn: "", email: "" });
 
   const filteredEvents =
     selectedCategory === "All"
@@ -86,9 +99,22 @@ const Events = () => {
       : events.filter((e) => e.category === selectedCategory);
 
   const handleRegister = (eventId: string) => {
-    const event = events.find((e) => e.id === eventId);
-    toast.success(`Registration initiated for ${event?.title}`, {
-      description: "Proceed to the registration portal to complete enrollment.",
+    setPickedEventId(eventId);
+    setRegisterOpen(true);
+  };
+
+  const pickedEvent = useMemo(() => events.find((e) => e.id === pickedEventId) || null, [pickedEventId]);
+
+  const submitRegistration = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!participant.name || !participant.usn || !pickedEvent) {
+      toast.error("Please fill in your name and USN to generate the ticket");
+      return;
+    }
+    setRegisterOpen(false);
+    setTicketOpen(true);
+    toast.success("Admit card conjured!", {
+      description: "Download your QR ticket and keep it handy.",
       icon: <Sparkles className="w-4 h-4 text-gold" />,
     });
   };
@@ -146,6 +172,51 @@ const Events = () => {
           )}
         </div>
       </main>
+
+      {/* Registration Dialog */}
+      <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+        <DialogContent className="bg-card/95 border border-border backdrop-blur-xl">
+          <DialogHeader>
+            <DialogTitle className="font-display tracking-wider">
+              Register for {pickedEvent?.title || "Event"}
+            </DialogTitle>
+          </DialogHeader>
+          <form onSubmit={submitRegistration} className="space-y-4">
+            <div className="grid grid-cols-1 gap-3">
+              <div>
+                <label className="text-sm">Full Name</label>
+                <Input value={participant.name} onChange={(e) => setParticipant({ ...participant, name: e.target.value })} placeholder="Avery Smith" className="mt-1 bg-input" />
+              </div>
+              <div>
+                <label className="text-sm">USN</label>
+                <Input value={participant.usn} onChange={(e) => setParticipant({ ...participant, usn: e.target.value })} placeholder="1NT21CS001" className="mt-1 bg-input" />
+              </div>
+              <div>
+                <label className="text-sm">Email</label>
+                <Input type="email" value={participant.email} onChange={(e) => setParticipant({ ...participant, email: e.target.value })} placeholder="student@college.edu" className="mt-1 bg-input" />
+              </div>
+            </div>
+            <DialogFooter>
+              <Button type="submit" variant="magical" className="w-full">Generate QR Admit Card</Button>
+            </DialogFooter>
+          </form>
+        </DialogContent>
+      </Dialog>
+
+      {/* Ticket Dialog */}
+      <Dialog open={ticketOpen} onOpenChange={setTicketOpen}>
+        <DialogContent className="bg-card/95 border border-border backdrop-blur-xl max-w-xl">
+          <DialogHeader>
+            <DialogTitle className="font-display tracking-wider">Your Magical Admit Card</DialogTitle>
+          </DialogHeader>
+          {pickedEvent && (
+            <AdmitCard
+              event={{ id: pickedEvent.id, title: pickedEvent.title, date: pickedEvent.date, time: pickedEvent.time, venue: pickedEvent.venue }}
+              person={{ name: participant.name || "Student", usn: participant.usn || "USN", email: participant.email }}
+            />
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
